@@ -1,0 +1,14 @@
+type Query {
+    getAllFriends: [Friend]
+}
+
+type Friend @key(fields: "id") {
+    id: String!
+    name: String
+    address: Address
+}
+
+type Address @key(fields: "id") {
+    id: String!
+    city: String
+}

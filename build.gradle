@@ -1,0 +1,47 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "com.netflix.dgs.codegen" version "4.0.10"
+	id 'java'
+}
+
+group = 'com.learning'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '15'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:latest.release"
+	implementation group: 'com.apollographql.federation', name: 'federation-graphql-java-support', version: '0.6.1'
+
+
+	implementation group: 'org.reflections', name: 'reflections', version: '0.9.10'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+generateJava{
+	schemaPaths = ["${projectDir}/src/main/resources/schema"] // List of directories containing schema files
+	packageName = 'com.learning.serviceb.graphql' // The package name to use to generate sources
+	generateClient = true // Enable generating the type safe query API
+}
